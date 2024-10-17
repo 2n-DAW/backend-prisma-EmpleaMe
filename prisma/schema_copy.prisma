@@ -1,0 +1,62 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  email      String    @unique
+  username   String    
+  password   String    
+  bio        String?   
+  image      String?
+  followsId  String    @db.ObjectId   
+  follows    User[]    @relation("UserFollows", fields: [followsId], references: [id])
+  followedBy User[]    @relation("UserFollows")
+  authored   Article[] 
+  favorites  Article[] @relation(fields: [articleId], references: [id])
+  articleId  String    @db.ObjectId
+  comment    Comment[] 
+}
+
+model Article {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String   @unique
+  slug        String    
+  description String    
+  body        String    
+  tagList     Tag[]    @relation(fields: [tagId], references: [id])
+  tagId       String   @db.ObjectId
+  author      User     @relation(fields: [authorId], references: [id])
+  authorId    String   @db.ObjectId
+  favoritedBy User[]   @relation(fields: [userId], references: [id])
+  userId      String   @db.ObjectId
+  comments    Comment[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
+}
+
+model Comment {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  body      String   
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  String   @db.ObjectId
+  article   Article  @relation(fields: [articleId], references: [id])
+  articleId String   @db.ObjectId
+}
+
+model Tag {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  tagName   String    @unique
+  article   Article[] @relation(fields: [articleId], references: [id])
+  articleId String    @db.ObjectId
+}

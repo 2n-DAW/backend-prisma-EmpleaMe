@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,45 +7,103 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  email      String    @unique /// User email for registering and login use.
-  username   String    @id @default(auto()) @map("_id") @db.ObjectId /// User internal id.
-  password   String /// User password stored in the database.
-  bio        String? /// User biographical information.
-  image      String? /// Link to the user avatar.
-  follows    User[]    @relation("UserFollows") /// List of other users that this one follows.
-  followedBy User[]    @relation("UserFollows") /// List of other users that follows this one.
-  authored   Article[] @relation("Author") /// List of articles this user has written.
-  favorites  Article[] @relation("Favorites") /// List of articles this user has favorited.
-  comment    Comment[] @relation("Author") /// List of comments this user has written.
+type TokensAccessTokens {
+  id        String   @map("_id") @db.ObjectId
+  createdAt DateTime @db.Date
+  token     String
 }
 
-model Article {
-  title          String    @unique
-  slug           String    @id @default(auto()) @map("_id") @db.ObjectId /// Slug is an uri safe string derived from the title.
-  description    String /// Description for SEO of this article.
-  body           String /// The main content of the article.
-  tagList        Tag[] /// List of tags associated with this article.
-  author         User      @relation("Author", fields: [authorUsername], references: [username], onDelete: Cascade) /// User that is the author of this article.
-  authorUsername String /// Username of the author of this article.
-  favoritedBy    User[]    @relation("Favorites") /// List of users that have favorited this article.
-  comments       Comment[] @relation("Comments") /// List of comments of this article.
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @default(now())
+model auths {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  v              Int      @map("__v")
+  bio            String
+  createdAt      DateTime @db.Date
+  email          String   @unique(map: "email_1")
+  favouriteJobs  String[]
+  followingUsers String[]
+  image          String
+  password       String
+  updatedAt      DateTime @db.Date
+  username       String   @unique(map: "username_1")
 }
 
-model Comment {
-  id             String      @id @default(auto()) @map("_id") @db.ObjectId
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @default(now())
-  body           String /// The main content of the comment.
-  author         User     @relation("Author", fields: [authorUsername], references: [username], onDelete: Cascade) /// User that is the author of this comment.
-  authorUsername String /// Username of the author of this comment.
-  Article        Article  @relation("Comments", fields: [articleSlug], references: [slug], onDelete: Cascade) /// Article that this comment belongs to.
-  articleSlug    String /// Article slug that this comment belongs to.
+model blacklists {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  v            Int      @map("__v")
+  createdAt    DateTime @db.Date
+  refreshToken String   @unique(map: "refreshToken_1")
 }
 
-model Tag {
-  tagName String    @id @default(auto()) @map("_id") @db.ObjectId
-  article Article[] /// List of articles that have this tag.
+model categories {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  v             Int      @map("__v")
+  category_name String
+  id_cat        String   @unique(map: "id_cat_1")
+  image         String
+  jobs          String[]
+  slug          String   @unique(map: "slug_1")
+}
+
+model comments {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  v         Int      @map("__v")
+  author    String   @db.ObjectId
+  body      String
+  createdAt DateTime @db.Date
+  job       String   @db.ObjectId
+  ///job       jobs   @relation(fields: [jobId], references: [id])
+  ///jobId     String   @db.ObjectId
+  updatedAt DateTime @db.Date
+}
+
+model contracts {
+  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  v             Int    @map("__v")
+  contract_name String
+  id_contract   String @unique(map: "id_contract_1")
+}
+
+model jobs {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  v               Int      @map("__v")
+  author          String   @db.ObjectId
+  comments        String[]
+  ///comments        comments[]
+  createdAt       DateTime @db.Date
+  description     String
+  favouritesCount Int?
+  id_cat          String
+  id_contract     String
+  id_province     String
+  id_workingDay   String
+  images          String[]
+  img             String
+  name            String
+  salary          Int
+  slug            String   @unique(map: "slug_1")
+  updatedAt       DateTime @db.Date
+}
+
+model provinces {
+  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  v             Int    @map("__v")
+  id_province   String @unique(map: "id_province_1")
+  province_name String
+}
+
+model tokens {
+  id           String               @id @default(auto()) @map("_id") @db.ObjectId
+  v            Int                  @map("__v")
+  accessTokens TokensAccessTokens[]
+  createdAt    DateTime             @db.Date
+  refreshToken String               @unique(map: "refreshToken_1")
+  updatedAt    DateTime             @db.Date
+  user         String               @db.ObjectId
+}
+
+model workingdays {
+  id              String @id @default(auto()) @map("_id") @db.ObjectId
+  v               Int    @map("__v")
+  id_workingDay   String @unique(map: "id_workingDay_1")
+  workingDay_name String
 }
