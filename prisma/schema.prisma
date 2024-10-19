@@ -15,7 +15,6 @@ type TokensAccessTokens {
 
 model auths {
   id             String   @id @default(auto()) @map("_id") @db.ObjectId
-  v              Int      @map("__v")
   bio            String
   createdAt      DateTime @db.Date
   email          String   @unique(map: "email_1")
@@ -29,14 +28,12 @@ model auths {
 
 model blacklists {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
-  v            Int      @map("__v")
   createdAt    DateTime @db.Date
   refreshToken String   @unique(map: "refreshToken_1")
 }
 
 model categories {
   id            String   @id @default(auto()) @map("_id") @db.ObjectId
-  v             Int      @map("__v")
   category_name String
   id_cat        String   @unique(map: "id_cat_1")
   image         String
@@ -46,7 +43,6 @@ model categories {
 
 model comments {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  v         Int      @map("__v")
   author    String   @db.ObjectId
   body      String
   createdAt DateTime @db.Date
@@ -58,14 +54,12 @@ model comments {
 
 model contracts {
   id            String @id @default(auto()) @map("_id") @db.ObjectId
-  v             Int    @map("__v")
   contract_name String
   id_contract   String @unique(map: "id_contract_1")
 }
 
 model jobs {
   id              String   @id @default(auto()) @map("_id") @db.ObjectId
-  v               Int      @map("__v")
   author          String   @db.ObjectId
   comments        String[]
   ///comments        comments[]
@@ -73,6 +67,8 @@ model jobs {
   description     String
   favouritesCount Int?
   id_cat          String
+  ///id_cat          categories @relation(fields: [id_catId], references: [id_cat])
+  ///id_catId        String
   id_contract     String
   id_province     String
   id_workingDay   String
@@ -86,14 +82,12 @@ model jobs {
 
 model provinces {
   id            String @id @default(auto()) @map("_id") @db.ObjectId
-  v             Int    @map("__v")
   id_province   String @unique(map: "id_province_1")
   province_name String
 }
 
 model tokens {
   id           String               @id @default(auto()) @map("_id") @db.ObjectId
-  v            Int                  @map("__v")
   accessTokens TokensAccessTokens[]
   createdAt    DateTime             @db.Date
   refreshToken String               @unique(map: "refreshToken_1")
@@ -103,7 +97,6 @@ model tokens {
 
 model workingdays {
   id              String @id @default(auto()) @map("_id") @db.ObjectId
-  v               Int    @map("__v")
   id_workingDay   String @unique(map: "id_workingDay_1")
   workingDay_name String
 }

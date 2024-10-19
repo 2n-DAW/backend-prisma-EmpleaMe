@@ -6,12 +6,6 @@ const router = Router();
 
 router.post('/categories', category.createCategory);
 
-// router.get('/categories', category.findAllCategories);
-
-// router.get('/categories/:slug', category.findOneCategory);
-
-// router.put('/categories/:slug', category.updateCategory);
-
-// router.delete('/categories/:slug', category.deleteOneCategory);
+router.get('/categories', category.findAllCategories);
 
 export default router;

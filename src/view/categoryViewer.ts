@@ -1,16 +1,15 @@
-import { Comment, User } from "@prisma/client";
-import profileViewer from "./profileViewer";
+import { Category } from "../utils/types/category";
 
-export default function commentViewer(
-  comment: Comment & { author: User & { followedBy: User[] } },
-  currentUser?: User
+export default function categoryViewer(
+  category: Category
 ) {
-  const commentView = {
-    id: comment.id,
-    createdAt: comment.createdAt,
-    updatedAt: comment.updatedAt,
-    body: comment.body,
-    author: profileViewer(comment.author, currentUser),
+  const categoryView = {
+    id: category.id,
+    id_cat: category.id_cat,
+    category_name: category.category_name,
+    image: category.image,
+    slug: category.slug,
+    jobs: category.jobs
   };
-  return commentView;
+  return categoryView;
 }
