@@ -2,13 +2,12 @@ import { NextFunction, Response } from "express";
 import { Request } from "express-jwt";
 import userCompanySearch from "../../utils/db/userCompany/userCompanySearch";
 import userViewer from "../../view/userViewer";
-import bcrypt from "bcrypt";
 import userCompanyUpdate from "../../utils/db/userCompany/userCompanyUpdate";
 
 interface CustomRequest extends Request {
-    userId: string;
-    userEmail: string;
-    userHashedPwd: string;
+    userId?: string;
+    userEmail?: string;
+    userHashedPwd?: string;
 }
 
 export default async function userUpdate(
@@ -19,6 +18,8 @@ export default async function userUpdate(
     const { user } = req.body;
 
     try {
+        if (!req.userEmail || !req.userHashedPwd || !req.userId) return res.status(400).json({ message: "Error en el token" });
+
         if (!user) return res.status(400).json({ message: "Faltan datos" });
         const user_db = await userCompanySearch(req.userEmail);
 

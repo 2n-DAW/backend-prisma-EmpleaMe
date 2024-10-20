@@ -1,4 +1,5 @@
 import prisma from "../prisma";
+import { usersCompany } from "@prisma/client";
 
 export default async function authCompanyLogin(
     email: string,
