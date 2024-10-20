@@ -20,21 +20,20 @@ export default async function userLogin(
 
         const user = await userCompanySearch(email);
         if (!user) return res.status(401).json({ message: "Invalid username" });
-        console.log(user.password);
-        console.log(hashedPassword);
         const match = await bcrypt.compare(password, user.password);
-
-        console.log(match);
 
         if (!match) {
             return res.status(401).json({ message: "Invalid username or password" });
         }
         if (process.env.JWT_SECRET !== undefined) {
             const token = jwt.sign({
-                id: user.id,
-                username: user.username,
-                email: user.email,
-                password: user.password
+                user: {
+                    id: user.id,
+                    username: user.username,
+                    email: user.email,
+                    password: user.password
+                }
+
             },
                 process.env.JWT_SECRET,
                 { expiresIn: process.env.ACCESS_TOKEN_EXPIRATION }

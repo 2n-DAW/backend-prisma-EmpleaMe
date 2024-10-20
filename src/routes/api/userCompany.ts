@@ -1,7 +1,6 @@
 import { Router } from "express";
-import { userRegister, userLogin } from "../../controllers/userCompanyController";
-//import { userLoginValidator, userRegisterValidator } from "../../middleware/userValidator";
-
+import { userRegister, userLogin, userUpdate } from "../../controllers/userCompanyController";
+import { verifyJWT } from "../../middlewares";
 const router = Router();
 
 router.post("/user/login", userLogin);
@@ -10,6 +9,6 @@ router.post("/user", userRegister);
 
 // router.get("/user", verifyJWT, getCurrentUser);
 
-// router.put("/user", verifyJWT, userUpdate);
+router.put("/user", verifyJWT, userUpdate);
 
 export default router;
