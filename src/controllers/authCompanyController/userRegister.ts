@@ -2,8 +2,9 @@ import { NextFunction, Response } from "express";
 import { Request } from "express-jwt";
 import authCompanyRegister from "../../utils/db/user/AuthCompanyRegisterPrisma";
 import authViewer from "../../view/authViewer";
+import bcrypt from "bcrypt";
 
-export default async function createCategory(
+export default async function userRegister(
     req: Request,
     res: Response,
     next: NextFunction
@@ -11,7 +12,8 @@ export default async function createCategory(
     const { username, password, email } = req.body;
 
     try {
-        const user = await authCompanyRegister(username, password, email);
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const user = await authCompanyRegister(username, hashedPassword, email);
         const authView = authViewer(user);
         return res.status(201).json(authView);
     } catch (error) {

@@ -4,7 +4,7 @@ import { userRegister } from "../../controllers/authCompanyController";
 
 const router = Router();
 
-// router.post("/user/login", userLoginValidator, userLogin);
+//router.post("/user/login" userLogin);
 
 router.post("/user", userRegister);
 
