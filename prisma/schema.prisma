@@ -1,0 +1,116 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+type TokensAccessTokens {
+  id        String   @map("_id") @db.ObjectId
+  createdAt DateTime @db.Date
+  token     String
+}
+
+model auths {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  bio            String
+  createdAt      DateTime @db.Date
+  email          String   @unique(map: "email_1")
+  favouriteJobs  String[]
+  followingUsers String[]
+  image          String
+  password       String
+  updatedAt      DateTime @db.Date
+  username       String   @unique(map: "username_1")
+}
+
+model authsCompany {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  bio            String
+  company_name   String
+  createdAt      DateTime @db.Date
+  email          String   @unique(map: "email_1")
+  favouriteJobs  String[]
+  followingUsers String[]
+  image          String
+  password       String
+  updatedAt      DateTime @db.Date
+  username       String   @unique(map: "username_1")
+}
+
+model blacklists {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt    DateTime @db.Date
+  refreshToken String   @unique(map: "refreshToken_1")
+}
+
+model categories {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  category_name String
+  id_cat        String   @unique(map: "id_cat_1")
+  image         String
+  jobs          String[]
+  slug          String   @unique(map: "slug_1")
+}
+
+model comments {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  author    String   @db.ObjectId
+  body      String
+  createdAt DateTime @db.Date
+  job       String   @db.ObjectId
+  ///job       jobs   @relation(fields: [jobId], references: [id])
+  ///jobId     String   @db.ObjectId
+  updatedAt DateTime @db.Date
+}
+
+model contracts {
+  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  contract_name String
+  id_contract   String @unique(map: "id_contract_1")
+}
+
+model jobs {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  author          String   @db.ObjectId
+  comments        String[]
+  ///comments        comments[]
+  createdAt       DateTime @db.Date
+  description     String
+  favouritesCount Int?
+  id_cat          String
+  ///id_cat          categories @relation(fields: [id_catId], references: [id_cat])
+  ///id_catId        String
+  id_contract     String
+  id_province     String
+  id_workingDay   String
+  images          String[]
+  img             String
+  name            String
+  salary          Int
+  slug            String   @unique(map: "slug_1")
+  updatedAt       DateTime @db.Date
+}
+
+model provinces {
+  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  id_province   String @unique(map: "id_province_1")
+  province_name String
+}
+
+model tokens {
+  id           String               @id @default(auto()) @map("_id") @db.ObjectId
+  accessTokens TokensAccessTokens[]
+  createdAt    DateTime             @db.Date
+  refreshToken String               @unique(map: "refreshToken_1")
+  updatedAt    DateTime             @db.Date
+  user         String               @db.ObjectId
+}
+
+model workingdays {
+  id              String @id @default(auto()) @map("_id") @db.ObjectId
+  id_workingDay   String @unique(map: "id_workingDay_1")
+  workingDay_name String
+}
