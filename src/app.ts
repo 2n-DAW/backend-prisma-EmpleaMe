@@ -1,7 +1,7 @@
 import express from "express";
 import categoryRouter from "./routes/api/category";
-//import userCompanyRouter from "./routes/api/userCompany";
-// import generalErrorHandler from "./middleware/errorHandling/generalErrorHandler";
+import userCompanyRouter from "./routes/api/authCompany";
+//import generalErrorHandler from "./middleware/errorHandling/generalErrorHandler";
 // import {
 //   authErrorHandler,
 //   prismaErrorHandler,
@@ -10,8 +10,8 @@ import categoryRouter from "./routes/api/category";
 const app = express();
 app.use(express.json());
 app.use("/", categoryRouter);
-//app.use("/", userCompanyRouter);
+app.use("/", userCompanyRouter);
 
-// app.use(authErrorHandler, prismaErrorHandler, generalErrorHandler);
+//app.use(generalErrorHandler);
 
 export default app;
