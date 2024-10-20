@@ -1,9 +1,10 @@
 import { NextFunction, Response } from "express";
 import { Request } from "express-jwt";
-import authCompanyLogin from "../../utils/db/userCompany/userCompanyLogin";
+import userCompanyLogin from "../../utils/db/userCompany/userCompanyLogin";
 import { userLoginViewer } from "../../view/userViewer";
 import bcrypt from "bcrypt";
 import jwt = require("jsonwebtoken");
+import userCompanySearch from "../../utils/db/userCompany/userCompanySearch";
 
 export default async function userLogin(
     req: Request,
@@ -12,15 +13,20 @@ export default async function userLogin(
 ) {
     const { password, email } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
-    console.log(hashedPassword);
+
 
     try {
-        console.log(password, email);
-        const user = await authCompanyLogin(hashedPassword, email);
-        console.log(user);
 
 
-        if (!user) {
+        const user = await userCompanySearch(email);
+        if (!user) return res.status(401).json({ message: "Invalid username" });
+        console.log(user.password);
+        console.log(hashedPassword);
+        const match = await bcrypt.compare(password, user.password);
+
+        console.log(match);
+
+        if (!match) {
             return res.status(401).json({ message: "Invalid username or password" });
         }
         if (process.env.JWT_SECRET !== undefined) {
@@ -39,7 +45,8 @@ export default async function userLogin(
             throw new Error("JWT_SECRET not defined");
         }
     } catch (error) {
+        console.log(error);
         //return next(error);
-        return res.status(500).json({ message: "Error al buscar usuario" });
+        return res.status(500).json({ message: error });
     }
 }

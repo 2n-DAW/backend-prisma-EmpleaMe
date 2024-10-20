@@ -19,8 +19,8 @@ export function userLoginViewer(user: usersCompany, token: string) {
       username: user.username,
       bio: user.bio,
       image: user.image,
-      token: token,
       company: user.company,
+      token: token,
     },
   };
   return userView;
