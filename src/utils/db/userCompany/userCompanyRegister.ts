@@ -5,7 +5,7 @@ export default async function authCompanyRegister(
     password: string,
     email: string,
 ) {
-    const newUser = await prisma.authsCompany.create({
+    const newUser = await prisma.usersCompany.create({
         data: {
             username,
             password,
@@ -14,7 +14,7 @@ export default async function authCompanyRegister(
             image: "",
             favouriteJobs: [],
             followingUsers: [],
-            company_name: "",
+            company: "",
             createdAt: new Date(),
             updatedAt: new Date()
         },

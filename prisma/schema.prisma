@@ -15,6 +15,7 @@ type TokensAccessTokens {
 
 model auths {
   id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  v              Int      @map("__v")
   bio            String
   createdAt      DateTime @db.Date
   email          String   @unique(map: "email_1")
@@ -26,14 +27,16 @@ model auths {
   username       String   @unique(map: "username_1")
 }
 
-model authsCompany {
+model usersCompany {
   id             String   @id @default(auto()) @map("_id") @db.ObjectId
   bio            String
-  company_name   String
+  company        String
   createdAt      DateTime @db.Date
   email          String   @unique(map: "email_1")
-  favouriteJobs  String[]
-  followingUsers String[]
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  favouriteJobs  Json?
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  followingUsers Json?
   image          String
   password       String
   updatedAt      DateTime @db.Date
@@ -42,12 +45,14 @@ model authsCompany {
 
 model blacklists {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  v            Int      @map("__v")
   createdAt    DateTime @db.Date
   refreshToken String   @unique(map: "refreshToken_1")
 }
 
 model categories {
   id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  v             Int?     @map("__v")
   category_name String
   id_cat        String   @unique(map: "id_cat_1")
   image         String
@@ -55,34 +60,44 @@ model categories {
   slug          String   @unique(map: "slug_1")
 }
 
+model clientusers {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  v         Int      @map("__v")
+  bio       String
+  createdAt DateTime @db.Date
+  email     String
+  image     String
+  updatedAt DateTime @db.Date
+  userId    String   @db.ObjectId
+  username  String
+}
+
 model comments {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  v         Int      @map("__v")
   author    String   @db.ObjectId
   body      String
   createdAt DateTime @db.Date
   job       String   @db.ObjectId
-  ///job       jobs   @relation(fields: [jobId], references: [id])
-  ///jobId     String   @db.ObjectId
   updatedAt DateTime @db.Date
 }
 
 model contracts {
   id            String @id @default(auto()) @map("_id") @db.ObjectId
+  v             Int    @map("__v")
   contract_name String
   id_contract   String @unique(map: "id_contract_1")
 }
 
 model jobs {
   id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  v               Int      @map("__v")
   author          String   @db.ObjectId
   comments        String[]
-  ///comments        comments[]
   createdAt       DateTime @db.Date
   description     String
   favouritesCount Int?
   id_cat          String
-  ///id_cat          categories @relation(fields: [id_catId], references: [id_cat])
-  ///id_catId        String
   id_contract     String
   id_province     String
   id_workingDay   String
@@ -96,12 +111,14 @@ model jobs {
 
 model provinces {
   id            String @id @default(auto()) @map("_id") @db.ObjectId
+  v             Int    @map("__v")
   id_province   String @unique(map: "id_province_1")
   province_name String
 }
 
 model tokens {
   id           String               @id @default(auto()) @map("_id") @db.ObjectId
+  v            Int                  @map("__v")
   accessTokens TokensAccessTokens[]
   createdAt    DateTime             @db.Date
   refreshToken String               @unique(map: "refreshToken_1")
@@ -109,8 +126,23 @@ model tokens {
   user         String               @db.ObjectId
 }
 
+model users {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  v              Int      @map("__v")
+  createdAt      DateTime @db.Date
+  email          String
+  favouriteJobs  String[]
+  followingUsers String[]
+  isActive       Boolean
+  password       String
+  updatedAt      DateTime @db.Date
+  userType       String
+  username       String
+}
+
 model workingdays {
   id              String @id @default(auto()) @map("_id") @db.ObjectId
+  v               Int    @map("__v")
   id_workingDay   String @unique(map: "id_workingDay_1")
   workingDay_name String
 }

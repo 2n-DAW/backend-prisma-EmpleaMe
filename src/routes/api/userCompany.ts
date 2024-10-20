@@ -1,10 +1,10 @@
 import { Router } from "express";
-import { userRegister } from "../../controllers/authCompanyController";
+import { userRegister, userLogin } from "../../controllers/userCompanyController";
 //import { userLoginValidator, userRegisterValidator } from "../../middleware/userValidator";
 
 const router = Router();
 
-//router.post("/user/login" userLogin);
+router.post("/user/login", userLogin);
 
 router.post("/user", userRegister);
 

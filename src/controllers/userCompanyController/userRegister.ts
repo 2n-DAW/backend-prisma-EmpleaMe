@@ -1,7 +1,7 @@
 import { NextFunction, Response } from "express";
 import { Request } from "express-jwt";
-import authCompanyRegister from "../../utils/db/user/AuthCompanyRegisterPrisma";
-import authViewer from "../../view/authViewer";
+import authCompanyRegister from "../../utils/db/userCompany/userCompanyRegister";
+import authViewer from "../../view/userViewer";
 import bcrypt from "bcrypt";
 
 export default async function userRegister(

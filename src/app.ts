@@ -1,6 +1,6 @@
 import express from "express";
 import categoryRouter from "./routes/api/category";
-import userCompanyRouter from "./routes/api/authCompany";
+import userCompanyRouter from "./routes/api/userCompany";
 //import generalErrorHandler from "./middleware/errorHandling/generalErrorHandler";
 // import {
 //   authErrorHandler,
