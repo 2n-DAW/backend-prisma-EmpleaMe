@@ -1,13 +1,14 @@
 import { NextFunction, Response } from "express";
 import { Request } from "express-jwt";
-import userCompanyRegister from "../../utils/db/userCompany/userCompanyRegister";
+import userCompanySearch from "../../utils/db/userCompany/userCompanySearch";
 import userViewer from "../../view/userViewer";
 import bcrypt from "bcrypt";
+import userCompanyUpdate from "../../utils/db/userCompany/userCompanyUpdate";
 
 interface CustomRequest extends Request {
-    userId?: string;
-    userEmail?: string;
-    userHashedPwd?: string;
+    userId: string;
+    userEmail: string;
+    userHashedPwd: string;
 }
 
 export default async function userUpdate(
@@ -18,15 +19,18 @@ export default async function userUpdate(
     const { user } = req.body;
 
     try {
-
-        console.log("userUpdate", req.userEmail);
-
-
-
-        if (!req.userEmail) return res.status(400).json({ message: "Faltan datos" });
         if (!user) return res.status(400).json({ message: "Faltan datos" });
-        const emai = req.userEmail;
-        // const updatedUser = await userCompanyUpdate(email, user);
+        const user_db = await userCompanySearch(req.userEmail);
+
+        const new_user = {
+            ...user_db,
+            ...user
+        }
+
+        const userUpdated = await userCompanyUpdate(new_user);
+        const userView = userViewer(userUpdated);
+
+        return res.status(201).json(userView);
 
     } catch (error) {
         //return next(error);
