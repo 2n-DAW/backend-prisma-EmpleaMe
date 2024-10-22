@@ -22,9 +22,8 @@ export default async function userLogin(
         if (!user) return res.status(401).json({ message: "Invalid username" });
         const match = await bcrypt.compare(password, user.password);
 
-        if (!match) {
-            return res.status(401).json({ message: "Invalid username or password" });
-        }
+        if (!match) return res.status(401).json({ message: "Invalid username or password" });
+
         if (process.env.JWT_SECRET !== undefined) {
             const token = jwt.sign({
                 user: {
