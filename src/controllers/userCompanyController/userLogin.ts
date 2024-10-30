@@ -11,7 +11,7 @@ export default async function userLogin(
     res: Response,
     next: NextFunction
 ) {
-    const { password, email } = req.body;
+    const { password, email } = req.body.user;
     const hashedPassword = await bcrypt.hash(password, 10);
 
 

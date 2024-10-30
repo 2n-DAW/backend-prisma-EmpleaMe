@@ -1,4 +1,16 @@
+const cors = require('cors');
 import app from "./app";
+
+// Configurar CORS
+app.use(cors());
+
+const CORSURL = process.env.CORSURL;
+const corsOptions = {
+  origin: CORSURL,
+  optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
 
 const port = process.env.PORT ? parseInt(process.env.PORT) : 3001;
 
