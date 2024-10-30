@@ -9,15 +9,18 @@ export default async function userRegister(
     res: Response,
     next: NextFunction
 ) {
-    const { username, password, email } = req.body;
+    const { username, password, email } = req.body.user;
 
     try {
+        console.log(username, password, email);
         const hashedPassword = await bcrypt.hash(password, 10);
         const user = await userCompanyRegister(username, hashedPassword, email);
+        console.log(user);
         const userView = userViewer(user);
         return res.status(201).json(userView); 
     } catch (error) {
         //return next(error);
+        console.log(error);
         return res.status(500).json({ message: "Error al crear usuario" });
     }
 }
