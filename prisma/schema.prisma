@@ -98,6 +98,8 @@ model inscriptions {
   status     Int
   updatedAt  DateTime @db.Date
   user_email String
+
+  @@unique([job, user_email])
 }
 
 model jobs {
