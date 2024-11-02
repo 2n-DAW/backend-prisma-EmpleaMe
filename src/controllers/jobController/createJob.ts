@@ -3,13 +3,21 @@ import { Request } from "express-jwt";
 import create from "../../utils/db/job/createJob";
 import jobViewer from "../../view/jobViewer";
 
+interface CustomRequest extends Request {
+    userId?: string;
+    userEmail?: string;
+    userHashedPwd?: string;
+}
+
 export default async function createJob(
-    req: Request,
+    req: CustomRequest,
     res: Response,
     next: NextFunction
 ) {
     try {
-        const { author, name, description, salary, images, img, id_cat, id_contract, id_workingDay, id_province } = req.body.job;
+        if (!req.userId || !req.body.job) return res.status(400).json({ message: "Faltan datos" });
+        const author = req.userId;
+        const { name, description, salary, images, img, id_cat, id_contract, id_workingDay, id_province } = req.body.job;
         const newJob = await create(author, name, description, salary, images, img, id_cat, id_contract, id_workingDay, id_province);
         const resp = jobViewer(newJob);
         return res.status(201).json({ job: resp });
