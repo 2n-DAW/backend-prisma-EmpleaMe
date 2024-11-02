@@ -9,12 +9,12 @@ export default async function userRegister(
     res: Response,
     next: NextFunction
 ) {
-    const { username, password, email } = req.body.user;
+    const { username, password, email, userId } = req.body.user;
 
     try {
-        console.log(username, password, email);
+        console.log(username, password, email, userId);
         const hashedPassword = await bcrypt.hash(password, 10);
-        const user = await userCompanyRegister(username, hashedPassword, email);
+        const user = await userCompanyRegister(username, hashedPassword, email, userId);
         console.log(user);
         const userView = userViewer(user);
         return res.status(201).json(userView); 

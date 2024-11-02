@@ -6,13 +6,11 @@ export default async function findAllJobs(query: any) {
 
     limit = isNotUndefined(limit) ? parseInt(limit) : 3;
     offset = isNotUndefined(offset) ? parseInt(offset) : 0;
-    salary_min = isNotUndefined(salary_min) ? salary_min : 0;
-    salary_max = isNotUndefined(salary_max) ? salary_max : 999999;
+
 
     const jobs = await prisma.jobs.findMany({
         where: {
             name: { contains: name },
-            salary: { gte: salary_min, lte: salary_max },
             ...(category && { id_cat: category }),
             ...(contract && { id_contract: contract }),
             ...(workingDay && { id_workingDay: workingDay }),

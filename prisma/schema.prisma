@@ -27,7 +27,7 @@ model auths {
   username       String   @unique(map: "username_1")
 }
 
-model usersCompany {
+model authsCompany {
   id             String   @id @default(auto()) @map("_id") @db.ObjectId
   bio            String
   company        String
@@ -65,11 +65,11 @@ model clientusers {
   v         Int      @map("__v")
   bio       String
   createdAt DateTime @db.Date
-  email     String
+  email     String   @unique(map: "email_1")
   image     String
   updatedAt DateTime @db.Date
-  userId    String   @db.ObjectId
-  username  String
+  userId    String?  @unique(map: "userId_1") @db.ObjectId
+  username  String   @unique(map: "username_1")
 }
 
 model comments {
@@ -89,14 +89,29 @@ model contracts {
   id_contract   String @unique(map: "id_contract_1")
 }
 
+model inscriptions {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  v          Int      @map("__v")
+  createdAt  DateTime @db.Date
+  date       DateTime @db.Date
+  job        String
+  status     Int
+  updatedAt  DateTime @db.Date
+  user_email String
+
+  @@unique([job, user_email])
+}
+
 model jobs {
   id              String   @id @default(auto()) @map("_id") @db.ObjectId
-  v               Int      @map("__v")
+  /// Multiple data types found: Int: 80%, BigInt: 20% out of 10 sampled entries
+  v               Json     @map("__v")
   author          String   @db.ObjectId
   comments        String[]
   createdAt       DateTime @db.Date
   description     String
-  favouritesCount Int?
+  /// Multiple data types found: Int: 71.4%, BigInt: 28.6% out of 7 sampled entries
+  favouritesCount Json?
   id_cat          String
   id_contract     String
   id_province     String
@@ -104,7 +119,8 @@ model jobs {
   images          String[]
   img             String
   name            String
-  salary          Int
+  /// Multiple data types found: Int: 80%, BigInt: 20% out of 10 sampled entries
+  salary          Json
   slug            String   @unique(map: "slug_1")
   updatedAt       DateTime @db.Date
 }
@@ -130,14 +146,47 @@ model users {
   id             String   @id @default(auto()) @map("_id") @db.ObjectId
   v              Int      @map("__v")
   createdAt      DateTime @db.Date
-  email          String
+  email          String   @unique(map: "email_1")
   favouriteJobs  String[]
   followingUsers String[]
   isActive       Boolean
   password       String
   updatedAt      DateTime @db.Date
   userType       String
-  username       String
+  username       String   @unique(map: "username_1")
+}
+
+model usersCompany {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  bio            String
+  company        String
+  createdAt      DateTime @db.Date
+  email          String   @unique(map: "email_1")
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  favouriteJobs  Json?
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  followingUsers Json?
+  image          String
+  password       String
+  updatedAt      DateTime @db.Date
+  username       String   @unique(map: "username_1")
+  userId         String   @unique(map: "userId_1")
+}
+
+model users_recruiter {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  bio            String
+  company        String
+  createdAt      DateTime @db.Date
+  email          String   @unique(map: "UQ_f95950fcc6525b5487a4ee46633")
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  favouriteJobs  Json?
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  followingUsers Json?
+  image          String
+  password       String
+  updatedAt      DateTime @db.Date
+  username       String   @unique(map: "UQ_e5e6a63de9fdaefa7ee70e84c0e")
 }
 
 model workingdays {
