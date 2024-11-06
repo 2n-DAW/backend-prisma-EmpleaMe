@@ -10,8 +10,8 @@ export default async function inscriptionUpdate(search_params: { job: string, us
         },
         data: {
             v: new_inscription_data.v,
-            createdAt: new_inscription_data.createdAt,
-            date: new_inscription_data.date,
+            // createdAt: new_inscription_data.createdAt,
+            // date: new_inscription_data.date,
             job: new_inscription_data.job,
             status: new_inscription_data.status,
             updatedAt: new_inscription_data.updatedAt,

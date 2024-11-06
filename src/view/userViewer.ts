@@ -8,6 +8,7 @@ export default function userViewer(user: usersCompany) {
       bio: user.bio,
       image: user.image,
     },
+    type: "company"
   };
   return userView;
 }

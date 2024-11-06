@@ -26,7 +26,7 @@ export default async function updateInscription(
         return res.status(201).json(listInscriptions);
 
     } catch (error) {
-        console.error("Error en updateInscription: ", error);
+        console.error("Error en listInscription: ", error);
         return res.status(500).json({ message: "Error al listar" });
     }
 }

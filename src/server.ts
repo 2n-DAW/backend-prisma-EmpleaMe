@@ -1,9 +1,6 @@
 const cors = require('cors');
 import app from "./app";
 
-// Configurar CORS
-app.use(cors());
-
 const CORSURL = process.env.CORSURL;
 const corsOptions = {
   origin: CORSURL,

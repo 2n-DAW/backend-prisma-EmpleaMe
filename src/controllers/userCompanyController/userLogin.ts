@@ -27,7 +27,7 @@ export default async function userLogin(
         if (process.env.JWT_SECRET !== undefined) {
             const token = jwt.sign({
                 user: {
-                    id: user.id,
+                    id: user.userId,
                     username: user.username,
                     email: user.email,
                     password: user.password
