@@ -93,7 +93,6 @@ model inscriptions {
   id         String   @id @default(auto()) @map("_id") @db.ObjectId
   v          Int      @map("__v")
   createdAt  DateTime @db.Date
-  date       DateTime @db.Date
   job        String
   status     Int
   updatedAt  DateTime @db.Date

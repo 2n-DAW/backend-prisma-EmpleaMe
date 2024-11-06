@@ -5,9 +5,7 @@ export default async function inscriptionsList(jobs: { slug: string }[]) {
 
     const inscriptions = await prisma.inscriptions.findMany({
         where: {
-            job: {
-                in: jobSlugs,
-            },
+            job: { in: jobSlugs }
         },
     });
 
