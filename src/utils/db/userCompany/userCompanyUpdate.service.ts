@@ -3,7 +3,7 @@ import { usersCompany } from "@prisma/client";
 
 export default async function userCompanyUpdate(
     user: usersCompany
-) {
+): Promise<usersCompany> {
     const updatedUser = await prisma.usersCompany.update({
         where: {
             id: user.id,

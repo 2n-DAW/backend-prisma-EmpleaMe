@@ -1,5 +1,6 @@
 import prisma from "../prisma";
 import slugfy from "../../functions/slugfy";
+import { jobs } from "@prisma/client";
 
 export default async function createJob(
     author: string,
@@ -12,7 +13,7 @@ export default async function createJob(
     id_contract: string,
     id_workingDay: string,
     id_province: string,
-) {
+): Promise<jobs>{
     const slug = slugfy(name) + '-' + (Math.random() * Math.pow(36, 6) | 0).toString(36);
 
     const newJob = await prisma.jobs.create({

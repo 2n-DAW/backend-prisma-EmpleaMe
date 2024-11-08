@@ -4,11 +4,7 @@ import inscriptionSearch from "../../utils/db/inscription/inscriptionSearch.serv
 import inscriptionViewer from "../../view/inscriptionViewer.view";
 import inscriptionUpdate from "../../utils/db/inscription/inscriptionUpdate.service";
 
-export default async function updateInscription(
-    req: Request,
-    res: Response,
-    next: NextFunction
-) {
+export default async function updateInscription(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
     const { inscription } = req.body;
 
     try {
@@ -22,7 +18,6 @@ export default async function updateInscription(
         }
 
         const inscriptionUpdated = await inscriptionUpdate({ job, user_email }, new_inscription);
-        console.log("Inscripción actualizada: ", inscriptionUpdated);
         const inscriptionView = inscriptionViewer(inscriptionUpdated);
 
         return res.status(201).json(inscriptionView);

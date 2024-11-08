@@ -2,7 +2,7 @@ import { categories } from "@prisma/client";
 
 export default function categoryViewer(
   category: categories
-) {
+):Partial<categories> {
   const categoryView = {
     id: category.id,
     id_cat: category.id_cat,

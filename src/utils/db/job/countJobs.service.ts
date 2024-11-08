@@ -1,7 +1,7 @@
 import prisma from "../prisma";
 import { default as isNotUndefined } from "../../functions/utils";
 
-export default async function job_count(query: any) {
+export default async function job_count(query: any): Promise<number> {
     let { limit, offset, category, contract, workingDay, province, name, salary_min, salary_max, author } = query;
     limit = isNotUndefined(limit) ? parseInt(limit) : 3;
     offset = isNotUndefined(offset) ? parseInt(offset) : 0;

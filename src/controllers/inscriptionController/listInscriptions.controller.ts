@@ -9,20 +9,13 @@ interface CustomRequest extends Request {
     userHashedPwd?: string;
 }
 
-export default async function updateInscription(
-    req: CustomRequest,
-    res: Response,
-    next: NextFunction
-) {
+export default async function updateInscription(req: CustomRequest,res: Response, next: NextFunction): Promise<Response | void> {
 
     try {
         const query = { author: req.userId, limit: 9999999, offset: 0 };
-        console.log(req.userId);
         if (!req.userId) return res.status(400).json({ message: "Token incorrecto" });
         const jobs_db = await findAllJobsDb(query);
-        console.log("jobs_db: ", jobs_db);
         const listInscriptions = await inscriptionsList(jobs_db);
-        console.log("listInscriptions: ", listInscriptions);
         return res.status(201).json(listInscriptions);
 
     } catch (error) {
