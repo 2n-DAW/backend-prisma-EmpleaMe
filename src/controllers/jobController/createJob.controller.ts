@@ -1,19 +1,9 @@
 import { NextFunction, Response } from "express";
-import { Request } from "express-jwt";
-import create from "../../utils/db/job/createJob";
-import jobViewer from "../../view/jobViewer";
+import create from "../../utils/db/job/createJob.service";
+import jobViewer from "../../view/jobViewer.view";
+import { CustomRequest } from "../../utils/interfaces/customRequest.interface";
 
-interface CustomRequest extends Request {
-    userId?: string;
-    userEmail?: string;
-    userHashedPwd?: string;
-}
-
-export default async function createJob(
-    req: CustomRequest,
-    res: Response,
-    next: NextFunction
-) {
+export default async function createJob(req: CustomRequest,res: Response,next: NextFunction): Promise<Response | void> {
     try {
         if (!req.userId || !req.body.job) return res.status(400).json({ message: "Faltan datos" });
         const author = req.userId;

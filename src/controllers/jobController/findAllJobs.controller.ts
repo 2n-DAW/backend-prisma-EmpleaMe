@@ -1,14 +1,10 @@
 import { NextFunction, Response } from "express";
 import { Request } from "express-jwt";
-import findAllJobsDb from "../../utils/db/job/findAllJobs";
-import jobViewer from "../../view/jobViewer";
-import countJobs from "../../utils/db/job/countJobs";
+import findAllJobsDb from "../../utils/db/job/findAllJobs.service";
+import jobViewer from "../../view/jobViewer.view";
+import countJobs from "../../utils/db/job/countJobs.service";
 
-export default async function findAllJobs(
-    req: Request,
-    res: Response,
-    next: NextFunction
-) {
+export default async function findAllJobs(req: Request,res: Response,next: NextFunction): Promise<Response | void> {
     try {
         const query = req.query;
         const jobs_db = await findAllJobsDb(query);

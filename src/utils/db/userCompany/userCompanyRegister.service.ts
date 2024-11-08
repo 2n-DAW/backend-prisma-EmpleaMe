@@ -1,3 +1,4 @@
+import { usersCompany } from "@prisma/client";
 import prisma from "../prisma";
 
 export default async function authCompanyRegister(
@@ -5,7 +6,7 @@ export default async function authCompanyRegister(
     password: string,
     email: string,
     userId: string
-) {
+): Promise<usersCompany> {
     const newUser = await prisma.usersCompany.create({
         data: {
             userId,

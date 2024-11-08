@@ -1,6 +1,7 @@
-import { usersCompany } from "@prisma/client";
+import { users, usersCompany } from "@prisma/client";
+import { typeUser } from "../utils/interfaces/typeUser.interface";
 
-export default function userViewer(user: usersCompany) {
+export default function userViewer(user: usersCompany): Partial<typeUser>{
   const userView = {
     user: {
       email: user.email,
@@ -13,7 +14,7 @@ export default function userViewer(user: usersCompany) {
   return userView;
 }
 
-export function userLoginViewer(user: usersCompany, token: string) {
+export function userLoginViewer(user: usersCompany, token: string): Partial<typeUser> {
   const userView = {
     user: {
       email: user.email,

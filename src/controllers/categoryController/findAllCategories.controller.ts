@@ -1,7 +1,7 @@
 import { NextFunction, Response } from "express";
 import { Request } from "express-jwt";
-import findAllCategoriesPrisma from "../../utils/db/category/findAllCategoriesPrisma";
-import categoryViewer from "../../view/categoryViewer";
+import findAllCategoriesPrisma from "../../utils/db/category/findAllCategoriesPrisma.service";
+import categoryViewer from "../../view/categoryViewer.view";
 
 export default async function getComments(
   req: Request,

@@ -1,23 +1,14 @@
 import { NextFunction, Response } from "express";
 import { Request } from "express-jwt";
-import userCompanyLogin from "../../utils/db/userCompany/userCompanyLogin";
-import { userLoginViewer } from "../../view/userViewer";
+import { userLoginViewer } from "../../view/userViewer.view";
 import bcrypt from "bcrypt";
 import jwt = require("jsonwebtoken");
-import userCompanySearch from "../../utils/db/userCompany/userCompanySearch";
+import userCompanySearch from "../../utils/db/userCompany/userCompanySearch.service";
 
-export default async function userLogin(
-    req: Request,
-    res: Response,
-    next: NextFunction
-) {
+export default async function userLogin(req: Request,res: Response,next: NextFunction): Promise<Response | void> {
     const { password, email } = req.body.user;
-    const hashedPassword = await bcrypt.hash(password, 10);
-
 
     try {
-
-
         const user = await userCompanySearch(email);
         if (!user) return res.status(401).json({ message: "Invalid username" });
         const match = await bcrypt.compare(password, user.password);
@@ -43,8 +34,7 @@ export default async function userLogin(
             throw new Error("JWT_SECRET not defined");
         }
     } catch (error) {
-        console.log(error);
-        //return next(error);
+        console.log("Error en userLogin: ", error);
         return res.status(500).json({ message: error });
     }
 }

@@ -1,16 +1,11 @@
 import { NextFunction, Response } from "express";
 import { Request } from "express-jwt";
-import createCategoryPrisma from "../../utils/db/category/createCategoryPrisma";
-import categoryViewer from "../../view/categoryViewer";
+import createCategoryPrisma from "../../utils/db/category/createCategoryPrisma.service";
+import categoryViewer from "../../view/categoryViewer.view";
 
-export default async function createCategory(
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
-  const { id_cat, category_name, image } = req.body;
-  
+export default async function createCategory(req: Request, res: Response, next: NextFunction) {
   try {
+    const { id_cat, category_name, image } = req.body;
     // Add category to database
     const category = await createCategoryPrisma(id_cat, category_name, image);
 

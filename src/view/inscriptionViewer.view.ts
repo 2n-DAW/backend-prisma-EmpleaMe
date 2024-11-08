@@ -1,4 +1,6 @@
-export default function inscriptionViewer(inscription: any) {
+import { inscriptions } from "@prisma/client";
+
+export default function inscriptionViewer(inscription: inscriptions): Partial<inscriptions> {
     return {
         id: inscription.id,
         job: inscription.job,
