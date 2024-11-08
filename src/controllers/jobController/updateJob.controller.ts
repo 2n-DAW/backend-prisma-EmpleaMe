@@ -1,9 +1,9 @@
 import { NextFunction, Response } from "express";
 import { Request } from "express-jwt";
-import updateJobDb from "../../utils/db/job/updateJob";
-import jobViewer from "../../view/jobViewer";
-import findOneJob from "../../utils/db/job/findOneJob";
-import userCompanySearch from "../../utils/db/userCompany/userCompanySearch";
+import updateJobDb from "../../utils/db/job/updateJob.service";
+import jobViewer from "../../view/jobViewer.view";
+import findOneJob from "../../utils/db/job/findOneJob.service";
+import userCompanySearch from "../../utils/db/userCompany/userCompanySearch.service";
 
 interface CustomRequest extends Request {
     userId?: string;

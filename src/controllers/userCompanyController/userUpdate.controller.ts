@@ -1,7 +1,8 @@
 import { NextFunction, Response } from "express";
 import { Request } from "express-jwt";
-import userCompanySearch from "../../utils/db/userCompany/userCompanySearch";
-import userViewer from "../../view/userViewer";
+import userCompanySearch from "../../utils/db/userCompany/userCompanySearch.service";
+import userViewer from "../../view/userViewer.view";
+import userCompanyUpdate from "../../utils/db/userCompany/userCompanyUpdate.service";
 
 interface CustomRequest extends Request {
     userId?: string;
@@ -14,15 +15,23 @@ export default async function userUpdate(
     res: Response,
     next: NextFunction
 ) {
+    const { user } = req.body;
 
     try {
         if (!req.userEmail || !req.userHashedPwd || !req.userId) return res.status(400).json({ message: "Error en el token" });
 
+        if (!user) return res.status(400).json({ message: "Faltan datos" });
         const user_db = await userCompanySearch(req.userEmail);
-        if (!user_db) return res.status(400).json({ message: "Usuario no encontrado" });
-        const userView = userViewer(user_db);
-        return res.status(201).json(userView);
 
+        const new_user = {
+            ...user_db,
+            ...user
+        }
+
+        const userUpdated = await userCompanyUpdate(new_user);
+        const userView = userViewer(userUpdated);
+
+        return res.status(201).json(userView);
 
     } catch (error) {
         //return next(error);

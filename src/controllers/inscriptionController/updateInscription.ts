@@ -1,8 +1,8 @@
 import { NextFunction, Response } from "express";
 import { Request } from "express-jwt";
-import inscriptionSearch from "../../utils/db/inscription/inscriptionSearch";
-import inscriptionViewer from "../../view/inscriptionViewer";
-import inscriptionUpdate from "../../utils/db/inscription/inscriptionUpdate";
+import inscriptionSearch from "../../utils/db/inscription/inscriptionSearch.service";
+import inscriptionViewer from "../../view/inscriptionViewer.view";
+import inscriptionUpdate from "../../utils/db/inscription/inscriptionUpdate.service";
 
 export default async function updateInscription(
     req: Request,

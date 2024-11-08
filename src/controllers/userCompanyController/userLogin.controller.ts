@@ -1,10 +1,10 @@
 import { NextFunction, Response } from "express";
 import { Request } from "express-jwt";
-import userCompanyLogin from "../../utils/db/userCompany/userCompanyLogin";
-import { userLoginViewer } from "../../view/userViewer";
+import userCompanyLogin from "../../utils/db/userCompany/userCompanyLogin.service";
+import { userLoginViewer } from "../../view/userViewer.view";
 import bcrypt from "bcrypt";
 import jwt = require("jsonwebtoken");
-import userCompanySearch from "../../utils/db/userCompany/userCompanySearch";
+import userCompanySearch from "../../utils/db/userCompany/userCompanySearch.service";
 
 export default async function userLogin(
     req: Request,

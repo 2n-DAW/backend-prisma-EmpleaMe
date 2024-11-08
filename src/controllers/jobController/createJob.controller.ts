@@ -1,7 +1,7 @@
 import { NextFunction, Response } from "express";
 import { Request } from "express-jwt";
-import create from "../../utils/db/job/createJob";
-import jobViewer from "../../view/jobViewer";
+import create from "../../utils/db/job/createJob.service";
+import jobViewer from "../../view/jobViewer.view";
 
 interface CustomRequest extends Request {
     userId?: string;

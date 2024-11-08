@@ -1,7 +1,7 @@
 import { NextFunction, Response } from "express";
 import { Request } from "express-jwt";
-import userCompanyRegister from "../../utils/db/userCompany/userCompanyRegister";
-import userViewer from "../../view/userViewer";
+import userCompanyRegister from "../../utils/db/userCompany/userCompanyRegister.service";
+import userViewer from "../../view/userViewer.view";
 import bcrypt from "bcrypt";
 
 export default async function userRegister(

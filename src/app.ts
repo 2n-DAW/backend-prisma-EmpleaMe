@@ -1,9 +1,9 @@
 import express from "express";
 const cors = require('cors');
-import categoryRouter from "./routes/api/category";
-import userCompanyRouter from "./routes/api/userCompany";
-import jobRouter from "./routes/api/jobs"
-import inscriptionRouter from "./routes/api/inscription";
+import categoryRouter from "./routes/api/category.router";
+import userCompanyRouter from "./routes/api/userCompany.router";
+import jobRouter from "./routes/api/jobs.router"
+import inscriptionRouter from "./routes/api/inscription.router";
 //import generalErrorHandler from "./middleware/errorHandling/generalErrorHandler";
 // import {
 //   authErrorHandler,

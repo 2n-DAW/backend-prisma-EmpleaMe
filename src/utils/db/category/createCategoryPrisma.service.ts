@@ -1,5 +1,5 @@
 import prisma from "../prisma";
-import slugfy from "../../slugfy";
+import slugfy from "../../functions/slugfy";
 
 export default async function createCategoryPrisma(
   id_cat: string,

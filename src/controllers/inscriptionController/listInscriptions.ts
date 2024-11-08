@@ -1,7 +1,7 @@
 import { NextFunction, Response } from "express";
 import { Request } from "express-jwt";
-import findAllJobsDb from "../../utils/db/job/findAllJobs";
-import inscriptionsList from "../../utils/db/inscription/inscriptionList";
+import findAllJobsDb from "../../utils/db/job/findAllJobs.service";
+import inscriptionsList from "../../utils/db/inscription/inscriptionList.service";
 
 interface CustomRequest extends Request {
     userId?: string;

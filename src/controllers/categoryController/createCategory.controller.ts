@@ -1,7 +1,7 @@
 import { NextFunction, Response } from "express";
 import { Request } from "express-jwt";
-import createCategoryPrisma from "../../utils/db/category/createCategoryPrisma";
-import categoryViewer from "../../view/categoryViewer";
+import createCategoryPrisma from "../../utils/db/category/createCategoryPrisma.service";
+import categoryViewer from "../../view/categoryViewer.view";
 
 export default async function createCategory(
   req: Request,
