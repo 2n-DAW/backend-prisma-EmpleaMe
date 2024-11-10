@@ -1,14 +1,8 @@
-import { Request, Response, NextFunction } from 'express';
+import { Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
+import { CustomRequest } from '../utils/interfaces/customRequest.interface';
 
-interface CustomRequest extends Request {
-    loggedin?: boolean;
-    userId?: string;
-    userEmail?: string;
-    userHashedPwd?: string;
-}
-
-const verifyJWTOptional = (req: CustomRequest, res: Response, next: NextFunction) => {
+const verifyJWTOptional = (req: CustomRequest, res: Response, next: NextFunction):Response | void => {
     const authHeader = req.headers.authorization || req.headers.Authorization;
 
 

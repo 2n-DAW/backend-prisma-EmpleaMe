@@ -1,13 +1,8 @@
-import { Request, Response, NextFunction } from 'express';
+import { Response, NextFunction } from 'express';
 import jwt, { VerifyErrors } from 'jsonwebtoken';
+import { CustomRequest } from '../utils/interfaces/customRequest.interface';
 
-interface CustomRequest extends Request {
-    userId?: string;
-    userEmail?: string;
-    userHashedPwd?: string;
-}
-
-const verifyJWT = (req: CustomRequest, res: Response, next: NextFunction) => {
+const verifyJWT = (req: CustomRequest, res: Response, next: NextFunction):Response | void => {
     const authHeader = req.headers.authorization || req.headers.Authorization as string;
 
     console.log('NoOptional', authHeader);

@@ -2,7 +2,7 @@ import { jobs } from "@prisma/client";
 
 export default function jobViewer(
     job: jobs
-) {
+): Partial<jobs> {
     const jobView = {
         id: job.id,
         id_cat: job.id_cat,

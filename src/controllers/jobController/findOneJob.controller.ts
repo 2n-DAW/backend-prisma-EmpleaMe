@@ -1,15 +1,10 @@
 import { NextFunction, Response } from "express";
 import { Request } from "express-jwt";
-import findOneJobDb from "../../utils/db/job/findOneJob";
-import jobViewer from "../../view/jobViewer";
+import findOneJobDb from "../../utils/db/job/findOneJob.service";
+import jobViewer from "../../view/jobViewer.view";
 
-export default async function findOneJob(
-    req: Request,
-    res: Response,
-    next: NextFunction
-) {
+export default async function findOneJob(req: Request,res: Response,next: NextFunction): Promise<Response | void> {
     try {
-        console.log(req.params);
         const job = await findOneJobDb(req.params);
         if (!job) return res.status(404).json({ message: "Job not found" });
         const resp = jobViewer(job);

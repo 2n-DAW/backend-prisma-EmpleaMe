@@ -1,20 +1,10 @@
 import { NextFunction, Response } from "express";
 import { Request } from "express-jwt";
-import userCompanySearch from "../../utils/db/userCompany/userCompanySearch";
-import userViewer from "../../view/userViewer";
+import userCompanySearch from "../../utils/db/userCompany/userCompanySearch.service";
+import userViewer from "../../view/userViewer.view";
+import { CustomRequest } from "../../utils/interfaces/customRequest.interface";
 
-interface CustomRequest extends Request {
-    userId?: string;
-    userEmail?: string;
-    userHashedPwd?: string;
-}
-
-export default async function userUpdate(
-    req: CustomRequest,
-    res: Response,
-    next: NextFunction
-) {
-
+export default async function userUpdate(req: CustomRequest, res: Response, next: NextFunction): Promise<Response | void> {
     try {
         if (!req.userEmail || !req.userHashedPwd || !req.userId) return res.status(400).json({ message: "Error en el token" });
 
@@ -25,7 +15,7 @@ export default async function userUpdate(
 
 
     } catch (error) {
-        //return next(error);
+        console.error("Error en userUpdate: ", error);
         return res.status(500).json({ message: "Error al crear usuario" });
     }
 }
